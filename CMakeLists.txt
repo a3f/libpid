@@ -26,10 +26,12 @@ ELSE()
 ENDIF(WIN32)
 add_library(${PROJECT_NAME} SHARED ${SOURCES})
 
+# Install pkg-config pc
+install(FILES lib${PROJECT_NAME}.pc DESTINATION share/pkgconfig)
+
 # Install library
 install(TARGETS ${PROJECT_NAME} DESTINATION lib)
 
 # Install library headers
-#file(GLOB HEADERS include/*.h)
 file(GLOB HEADERS pid.h)
 install(FILES ${HEADERS} DESTINATION include)

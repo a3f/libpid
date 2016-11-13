@@ -1,0 +1,13 @@
+prefix=/usr/local
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: libpid
+Description: Cross platform process identification
+Version: 0.1
+Requires:
+Libs: -lpid
+Cflags: 
+ 
+
