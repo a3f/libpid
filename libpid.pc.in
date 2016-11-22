@@ -1,13 +1,12 @@
-prefix=/usr/local
+prefix=@CMAKE_INSTALL_PREFIX@
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 includedir=${prefix}/include
 
 Name: libpid
 Description: Cross platform process identification
-Version: 0.1
+URL: http://github.com/a3f/libpid
+Version: @PROJECT_VERSION@
 Requires:
-Libs: -lpid
-Cflags: 
- 
-
+Libs: -L${libdir} -lpid
+Cflags: -I${includedir}

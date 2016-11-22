@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 2.6)
 project(pid)
+set(PROJECT_VERSION 0.1)
 set(CMAKE_BUILD_TYPE Debug)
+configure_file(libpid.pc.in libpid.pc @ONLY)
 
 if(MSVC)
   # Force to always compile with W4
@@ -27,7 +29,7 @@ ENDIF(WIN32)
 add_library(${PROJECT_NAME} SHARED ${SOURCES})
 
 # Install pkg-config pc
-install(FILES lib${PROJECT_NAME}.pc DESTINATION share/pkgconfig)
+install(FILES ${CMAKE_BINARY_DIR}/lib${PROJECT_NAME}.pc DESTINATION share/pkgconfig)
 
 # Install library
 install(TARGETS ${PROJECT_NAME} DESTINATION lib)
@@ -35,3 +37,4 @@ install(TARGETS ${PROJECT_NAME} DESTINATION lib)
 # Install library headers
 file(GLOB HEADERS pid.h)
 install(FILES ${HEADERS} DESTINATION include)
+
