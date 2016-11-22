@@ -5,7 +5,24 @@ Need a portable way to get a process' id? By name? execution path? Regex-matchin
 
 Works for Windows and POSIX (Linux, macOS, probably more).
 
-### But what use is a portably obtained pid, you might ask?
+## Install
+
+If Perl is available, you can install library, Perl wrapper and their dependencies by running
+
+    cpan Alien::libpid
+    cp -R $(perl -MAlien::libpid -e 'print Alien::libpid->dist_dir,"/share"') /usr/local/
+
+Afterwards you can use `pkg-config --libs libpid` and `pkg-config --cflags libpid` in your build script.
+
+### Manual install
+
+    git clone https://github.com/a3f/libpid.git && cd libpid
+    mkdir build && cd build
+    cmake ..
+    make install
+
+
+## But what use is a portably obtained pid, you might ask?
 * You can print it!
 * You can compare for equality
 * You can use it in cross platform code (e.g. both [lade] and [libvas] use libpid)
