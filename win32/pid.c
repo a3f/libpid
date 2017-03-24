@@ -11,6 +11,19 @@
 #include <TlHelp32.h>
 #include <stdio.h>
 
+/* Return last occurence of c or if none, pointer to NUL terminator */
+static char *my_strrchrnul(const char *s, int c)
+{
+	const char *last = NULL;
+	if (!s || !*s) return (char*)s;
+    do
+		if (*s == c) last = s;
+    while (*++s);
+
+	return (char*)(last ? last : s);
+}
+
+
 pid_t pid_self(void)
 {
     return GetCurrentProcessId();
@@ -31,14 +44,15 @@ pid_t pid_byname(const char *name)
 {
     PROCESSENTRY32 entry;
     entry.dwSize = sizeof entry;
-    char *ext = strrchr(name, '.');
+    char *ext = my_strrchrnul(name, '.');
     ptrdiff_t basenamelen = ext - name;
 
     HANDLE snapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
 
     for (BOOL more = Process32First(snapshot, &entry); more; more = Process32Next(snapshot, &entry)) {
-        if (strnicmp(name, entry.szExeFile, basenamelen) == 0
-        && (!ext || stricmp(ext, entry.szExeFile + basenamelen) == 0)) {
+        if (basenamelen == my_strrchrnul(entry.szExeFile, '.') - entry.szExeFile
+        && memicmp(name, entry.szExeFile, basenamelen) == 0
+        && ((!*ext || stricmp(ext, entry.szExeFile + basenamelen) == 0))) {
             return entry.th32ProcessID;
         }
     }

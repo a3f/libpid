@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
     puts("pid_by_window not supported on this platform");
 #else
     while(*++argv)
-        printf("%s: %d\n", *argv, pid_bywindow(*argv, NULL));
+        printf("%s: %d\n", *argv, pid_byname(*argv));
 #endif
 
 
