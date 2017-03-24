@@ -9,3 +9,6 @@ build/
 !build/t/.getkeep
 *.dylib
 *.pyc
+winbuild/
+!winbuild/.gitkeep
+!winbuild/t/.gitkeep
