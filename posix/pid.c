@@ -1,5 +1,5 @@
 #include <unistd.h>
-#include "pid.h"
+#include "libpid.h"
 
 pid_t pid_self(void)
 #if HAS_WEAK_ALIAS

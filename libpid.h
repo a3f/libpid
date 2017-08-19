@@ -1,13 +1,23 @@
 #ifndef LIBPID_PID_H_
 #define LIBPID_PID_H_
 
-#include <sys/types.h>
-
 #ifdef _WIN32
-#define WIN32_LEAN_AND_MEAN
-#include <windows.h>
-#include <TlHelp32.h>
+    #define WIN32_LEAN_AND_MEAN
+    #include <windows.h>
+    #include <TlHelp32.h>
+    #ifdef _MSC_VER
+        #ifndef _PID_T_
+            #define	_PID_T_
+            #ifndef _WIN64
+                typedef int	pid_t;
+            #else
+                typedef __int64	pid_t;
+            #endif
+        #endif
+    #endif
 #endif
+
+#include <sys/types.h>
 
 #ifndef PID_SNAPSHOT_NAMELEN
 #define PID_SNAPSHOT_NAMELEN 1024
@@ -97,6 +107,20 @@ pid_t   pid_byfileref(const char *name);
 #if _WIN32
 pid_t   pid_bywindow(const char *title, const char *);
 #define pid_bywindow pid_bywindow
+#endif
+
+#ifndef LIBPID_NO_FMT
+
+#if defined _WIN64
+    #include <inttypes.h>
+    #define FMTpid PRId64
+#else
+    #define FMTpid "d"
+#endif
+
+#define PRIpid FMTpid
+#define SCNpid FMTpid
+
 #endif
 
 #if 0

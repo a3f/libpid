@@ -5,6 +5,9 @@ Need a portable way to get a process' id? By name? execution path? Window name? 
 
 Works for Windows and macOS, Linux to follow.
 
+[![Build Status](https://travis-ci.org/a3f/libpid.svg?branch=master)](https://travis-ci.org/a3f/libpid)
+[![Build status](https://ci.appveyor.com/api/projects/status/uf517cinlto5onjl/branch/master?svg=true)](https://ci.appveyor.com/project/a3f/libpid/branch/master)
+
 ### install
 
     git clone https://github.com/a3f/libpid.git && cd libpid

@@ -1,8 +1,9 @@
 cmake_minimum_required(VERSION 2.6)
 project(pid C)
-set(PROJECT_VERSION 0.1)
-set(CMAKE_BUILD_TYPE Debug)
+set(PROJECT_VERSION 0.15)
 configure_file(libpid.pc.in libpid.pc @ONLY)
+set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+
 
 IF(WIN32)
     include(CheckIncludeFile)
@@ -20,9 +21,10 @@ if(MSVC)
   else()
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /W4")
   endif()
-elseif(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUC)
+elseif (("${CMAKE_C_COMPILER_ID}" MATCHES ".*Clang") OR ("${CMAKE_C_COMPILER_ID}" STREQUAL "GNU") OR ("${CMAKE_C_COMPILER_ID}" STREQUAL "Intel"))
   # Update if necessary
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Werror -pedantic -std=c99")
+  message(status "${CMAKE_C_COMPILER_ID}")
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -pedantic -std=c99")
 endif()
 
 include_directories(include)
@@ -63,4 +65,9 @@ install(TARGETS ${PROJECT_NAME} DESTINATION lib)
 # Install library headers
 file(GLOB HEADERS libpid.h)
 install(FILES ${HEADERS} DESTINATION include)
+
+# Testing
+enable_testing()
+add_test(PIDOF ${CMAKE_CURRENT_BINARY_DIR}/pidof pidof)
+add_test(PS ${CMAKE_CURRENT_BINARY_DIR}/ps)
 
