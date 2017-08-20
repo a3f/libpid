@@ -23,7 +23,6 @@ if(MSVC)
   endif()
 elseif (("${CMAKE_C_COMPILER_ID}" MATCHES ".*Clang") OR ("${CMAKE_C_COMPILER_ID}" STREQUAL "GNU") OR ("${CMAKE_C_COMPILER_ID}" STREQUAL "Intel"))
   # Update if necessary
-  message(status "${CMAKE_C_COMPILER_ID}")
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -pedantic -std=c99")
 endif()
 
@@ -31,7 +30,7 @@ include_directories(include)
 include_directories(.)
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     set(CMAKE_MACOSX_RPATH 1) 
-    file(GLOB SOURCES libproc/*.c)
+    file(GLOB SOURCES libproc/*.c posix/*.c)
 
 ELSEIF(UNIX)
     file(GLOB SOURCES posix/*.c)
@@ -45,6 +44,11 @@ ELSE()
 
 ENDIF()
 add_library(${PROJECT_NAME} SHARED ${SOURCES})
+
+file(GLOB mypid_src tools/mypid.c)
+add_executable(mypid ${mypid_src})
+target_link_libraries(mypid ${PROJECT_NAME})
+set_target_properties(mypid PROPERTIES OUTPUT_NAME "mypid")
 
 file(GLOB pidof_src tools/pidof.c)
 add_executable(pidof ${pidof_src})
@@ -68,6 +72,7 @@ install(FILES ${HEADERS} DESTINATION include)
 
 # Testing
 enable_testing()
+add_test(MYPID ${CMAKE_CURRENT_BINARY_DIR}/mypid)
 add_test(PIDOF ${CMAKE_CURRENT_BINARY_DIR}/pidof pidof)
 add_test(PS ${CMAKE_CURRENT_BINARY_DIR}/ps)
 
