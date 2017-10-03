@@ -61,7 +61,7 @@ target_link_libraries(ps ${PROJECT_NAME})
 set_target_properties(ps PROPERTIES OUTPUT_NAME "ps")
 
 # Install pkg-config pc
-install(FILES ${CMAKE_BINARY_DIR}/lib${PROJECT_NAME}.pc DESTINATION share/pkgconfig)
+install(FILES ${CMAKE_BINARY_DIR}/lib${PROJECT_NAME}.pc DESTINATION lib/pkgconfig)
 
 # Install library
 install(TARGETS ${PROJECT_NAME} DESTINATION lib)
