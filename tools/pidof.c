@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
     //FIXME: should be done in CMakeLists.txt
 #ifndef pid_byname
     (void) argv;
-    ret = EXIT_INTERNAL_ERR;
+    ret = EXIT_NOSYS;
     puts("pid_byname not supported on this platform");
 #else
     ret = EXIT_NOMATCH;

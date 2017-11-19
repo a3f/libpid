@@ -7,5 +7,6 @@
 #define EXIT_NOMATCH      1
 #define EXIT_INVALID_ARG  2
 #define EXIT_INTERNAL_ERR 3
+#define EXIT_NOSYS        4
 
 #endif

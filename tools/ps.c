@@ -7,7 +7,7 @@ int main(void)
     //FIXME: should be done in CMakeLists.txt
 #ifndef pid_snapshot_next
     puts("pid_snapshot_next not supported on this platform");
-    return EXIT_INTERNAL_ERR;
+    return EXIT_NOSYS;
 #else
 
     struct pid_snapshot_entry entry;
