@@ -40,8 +40,9 @@
  * Retrieves process id of caller
  */
 pid_t pid_self(void);
-#ifdef LIBPID_ON_UNIX
+#if defined LIBPID_ON_UNIX && !defined LIBPID_NO_MACRO
 #define pid_self getpid
+pid_t getpid(void);
 #endif
 
 #if 0
@@ -83,7 +84,7 @@ struct pid_snapshot_entry {
 int pid_snapshot_first(struct pid_snapshot *snapshot, struct pid_snapshot_entry *entry);
 int pid_snapshot_next(struct pid_snapshot *snapshot, struct pid_snapshot_entry *entry);
 
-#if defined(LIBPID_ON_DARWIN) || defined(_WIN32)
+#if (defined(LIBPID_ON_DARWIN) || defined(_WIN32)) && !defined LIBPID_NO_MACRO
 #define pid_snapshot pid_snapshot
 #define pid_snapshot_entry pid_snapshot_entry
 
@@ -94,17 +95,17 @@ int pid_snapshot_next(struct pid_snapshot *snapshot, struct pid_snapshot_entry *
 #endif
 
 /* TODO: provide more complete functions */
-#if LIBPID_ON_DARWIN || _WIN32
+#if (LIBPID_ON_DARWIN || _WIN32) && !defined LIBPID_NO_MACRO
 pid_t   pid_byname(const char *name);
 #define pid_byname pid_byname
 #endif
 
-#if LIBPID_ON_DARWIN
+#if LIBPID_ON_DARWIN && !defined LIBPID_NO_MACRO
 pid_t   pid_byfileref(const char *name);
 #define pid_byfileref pid_byfileref
 #endif
 
-#if _WIN32
+#if _WIN32 && !defined LIBPID_NO_MACRO
 pid_t   pid_bywindow(const char *title, const char *);
 #define pid_bywindow pid_bywindow
 #endif

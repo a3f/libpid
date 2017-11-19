@@ -1,4 +1,5 @@
 #include <unistd.h>
+#define LIBPID_NO_MACRO 1
 #include "libpid.h"
 
 pid_t pid_self(void)
