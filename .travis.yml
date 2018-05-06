@@ -13,7 +13,6 @@ matrix:
 
 before_install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install gcc-multilib ;  fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" && "$CC" == "gcc" ]]; then export CC=gcc-4.9 ; fi
   - "$CC --version"
 
 before_script:
@@ -26,8 +25,6 @@ script:
   - cd build
   - cmake ..
   - make
-  - sudo make install
   - if [[ "$TRAVIS_OS_NAME" != "linux" ]]; then ctest ;  fi
   - make package
   - sudo make install
-
