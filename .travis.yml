@@ -8,20 +8,18 @@ matrix:
     env: BITS=32 CC=gcc
   - os: linux
     env: BITS=64 CC=clang
-  - os: macos
+  - os: osx
     env: BITS=64 CC=clang
 
-env:
-  global:
-    - VERBOSE=1
-
 before_install:
-  - export CFLAGS=$BITS LDFLAGS=$BITS
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install gcc-multilib ;  fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" && "$CC" == "gcc" ]]; then export CC=gcc-4.9 ; fi
-  - $CC --version
+  - "$CC --version"
 
 before_script:
+  - export VERBOSE=1
+  - export CFLAGS=-m$BITS
+  - export LDFLAGS=-m$BITS
 
 script:
   - mkdir -p build
@@ -30,4 +28,6 @@ script:
   - make
   - sudo make install
   - if [[ "$TRAVIS_OS_NAME" != "linux" ]]; then ctest ;  fi
+  - make package
+  - sudo make install
 
