@@ -56,11 +56,11 @@ ELSE()
     file(GLOB SOURCES *.c)
 
 ENDIF()
-add_library(${PROJECT_NAME} SHARED ${SOURCES})
-set_target_properties(${PROJECT_NAME} PROPERTIES
-    VERSION   ${PROJECT_VERSION}
-    SOVERSION ${API_VERSION}
-)
+add_library(${PROJECT_NAME} STATIC ${SOURCES})
+#set_target_properties(${PROJECT_NAME} PROPERTIES
+#    VERSION   ${PROJECT_VERSION}
+#    SOVERSION ${API_VERSION}
+#)
 
 file(GLOB mypid_src tools/mypid.c)
 add_executable(mypid ${mypid_src})
