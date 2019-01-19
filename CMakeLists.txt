@@ -2,10 +2,10 @@ cmake_minimum_required(VERSION 2.8.0)
 project(pid C)
 set(PROJECT_VERSION 0.16)
 set(API_VERSION 0)
+INCLUDE (GNUInstallDirs)
 configure_file(libpid.pc.in libpid.pc @ONLY)
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
-INCLUDE (GNUInstallDirs)
 
 option(WITH_PIC "Compile static library as position-independent code" OFF) # Shared library is always PIC
 option(BUILD_MACOS_FATLIB "Build universal library for both i386 and x86_64 on macOS" ON)
